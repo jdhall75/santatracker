@@ -1,3 +1,12 @@
+#
+# This is to be used with a raspberry pi to track
+# @noradsanta and write out christmas messages in 
+# morse code via an LED.  I pulled an amber/green 
+# LED from an old computer to use in the project
+# so I have both pins 2 and 3 set up in write mode
+#
+#
+#
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
@@ -22,6 +31,9 @@ wiringpi.digitalWrite(3,0)
 #    sys.stderr = codecs.getwriter('utf_8')(sys.stderr.buffer, 'strict')
 
 # consumer key, comsumer secret, auth key, auth secret
+# you need to go to twitter and sign up for a developer account
+# to get these keys
+#
 ckey = ""
 csecret = ""
 akey = ""
@@ -61,10 +73,8 @@ alpha = {
 					' ': [dit, dit, dit, dit, dit, dit, dit]
 					}
 
-messages = ['Noel', 'Merry Christmas', 'Ho Ho Ho', 'Joy', 'Jesus', 'Elf', 'Santa Claus']
+messages = ['Noel', 'Merry Christmas', 'Ho Ho Ho', 'Joy', 'Jesus', 'Elf', 'Santa Claus', 'All I want for Christmas', 'All through the house']
 
-for ltr in "santa":
-	print alpha[ltr]
 
 
 # send received text to stdout
@@ -80,7 +90,8 @@ class StdOutListener(StreamListener):
         print (tweet['text'])
 
         msgIdx = random.randint(1,len(messages)-1)
-        lmsg = nospacemsg.lower()
+        msg = messages[msgIdx]
+        lmsg = msg.lower()
 
         print lmsg
 
